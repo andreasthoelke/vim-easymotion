@@ -259,6 +259,7 @@ function! EasyMotion#Eol(visualmode, direction) " {{{
     call s:EasyMotion('\(\w\|\s*\zs\|.\|^\)$', a:direction, a:visualmode ? visualmode() : '', '')
     return s:EasyMotion_is_cancelled
 endfunction " }}}
+
 " -- Search Motion -----------------------
 function! EasyMotion#Search(visualmode, direction, respect_direction) " {{{
     let s:current.is_operator = mode(1) ==# 'no' ? 1: 0
@@ -268,6 +269,15 @@ function! EasyMotion#Search(visualmode, direction, respect_direction) " {{{
     call s:EasyMotion(@/, search_direction, a:visualmode ? visualmode() : '', 0)
     return s:EasyMotion_is_cancelled
 endfunction " }}}
+
+" Added Sentence and Paragraph sneaks/motions
+function! EasyMotion#Sentence(visualmode, direction) " {{{
+    call s:EasyMotion('\(\%^\|\n\s*\n\|[.!?][])''"]*\s\+\)\zs', a:direction, a:visualmode ? visualmode() : '', '')
+endfunction " }}}
+function! EasyMotion#Paragraph(visualmode, direction) " {{{
+    call s:EasyMotion('\(\%^\|\n\s*\n\)\zs', a:direction, a:visualmode ? visualmode() : '', '')
+endfunction " }}}
+
 " -- JumpToAnywhere Motion ---------------
 function! EasyMotion#JumpToAnywhere(visualmode, direction) " {{{
     let s:current.is_operator = mode(1) ==# 'no' ? 1: 0
